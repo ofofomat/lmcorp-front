@@ -1,19 +1,27 @@
+// LoginPage.tsx
 'use client';
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./page.css";
+import { login } from '@/api/auth';
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleInputValues = (event) => {
+    const handleInputValues = async (event) => {
         event.preventDefault();
         if (!email || !password) {
             setError("Por favor, preencha todos os campos para efetuar o login em sua conta.");
             return;
-        } else {
-            setError("");
+        }
+
+        try {
+            const response = await login(email, password);
+            console.log('Login successful:', response);
+            // Handle successful login (e.g., redirect to dashboard)
+        } catch (err) {
+            setError(err.message);
         }
     };
 

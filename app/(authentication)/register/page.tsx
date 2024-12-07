@@ -1,24 +1,32 @@
+// RegisterPage.tsx
 'use client';
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./page.css";
+import { register } from '@/api/auth';
 
 const RegisterPage = () => {
-
     const [email, setEmail] = useState("");
     const [confirmEmail, setConfirmEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleInputValues = (event) => {
+    const handleInputValues = async (event) => {
         event.preventDefault();
         if (!email || !confirmEmail || !password || !confirmPassword) {
             setError("Por favor, preencha todos os campos para efetuar o cadastro.");
             return;
         } else if (password !== confirmPassword || email !== confirmEmail) {
             setError("Informações de senha e/ou e-mail não coincidem. Por favor, preencha todos os dados corretamente.");
-        } else {
-            setError("");
+            return;
+        }
+
+        try {
+            const response = await register(email, confirmEmail, password, confirmPassword);
+            console.log('Registration successful:', response);
+            // Handle successful registration (e.g., redirect to login page)
+        } catch (err) {
+            setError(err.message);
         }
     };
 
