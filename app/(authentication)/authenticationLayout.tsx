@@ -1,7 +1,9 @@
 'use client';
-import React from "react";
 
-const AuthenticationLayout = ({ children }) => {
+import React from "react";
+import { ReactNode } from "react";
+
+const AuthenticationLayout = ({ children }: { children: ReactNode }) => {
     return (
         <div className="app-container">
             <div className="main-content">
